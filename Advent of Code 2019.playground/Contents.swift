@@ -51,33 +51,33 @@ extension Int {
 //print("1b: \(oneBAns)")
 
 // https://adventofcode.com/2019/day/2
-var twoData = readNumberList(filename: "2")
-
-func evaluate(program: inout [Int]) {
-    var i = 0
-    mainLoop: while true {
-        switch program[i] {
-        case 1:
-            let a = program[program[i + 1]]
-            let b = program[program[i + 2]]
-            let j = program[i + 3]
-            program[j] = a + b
-            i += 4
-        case 2:
-            let a = program[program[i + 1]]
-            let b = program[program[i + 2]]
-            let j = program[i + 3]
-            program[j] = a * b
-            i += 4
-        case 99:
-            print("Done! at \(i)")
-            break mainLoop
-        default:
-            print("Error")
-            break mainLoop
-        }
-    }
-}
+//var twoData = readNumberList(filename: "2")
+//
+//func evaluate(program: inout [Int]) {
+//    var i = 0
+//    mainLoop: while true {
+//        switch program[i] {
+//        case 1:
+//            let a = program[program[i + 1]]
+//            let b = program[program[i + 2]]
+//            let j = program[i + 3]
+//            program[j] = a + b
+//            i += 4
+//        case 2:
+//            let a = program[program[i + 1]]
+//            let b = program[program[i + 2]]
+//            let j = program[i + 3]
+//            program[j] = a * b
+//            i += 4
+//        case 99:
+//            //print("Done! at \(i)")
+//            break mainLoop
+//        default:
+//            //print("Error")
+//            break mainLoop
+//        }
+//    }
+//}
 
 
 //var example = [ 2,4,4,5,99,0]
@@ -96,16 +96,17 @@ func evaluate(program: inout [Int]) {
 
 // 2b (is a bit slow [76,21]; ans: 7621)
 
-outer: for i in 0...99 {
-    for j in 0...99 {
-        var twoData = readNumberList(filename: "2")
-        twoData[1] = i
-        twoData[2] = j
-        evaluate(program: &twoData)
-        if twoData[0] == 19690720 {
-            print("2b [\(i),\(j)]; ans\(100 * i + j)")
-            break outer
-        }
-        
-    }
-}
+//let twoDataValues = readNumberList(filename: "2")
+//outer: for i in 0...99 {
+//    for j in 0...99 {
+//        var twoData = twoDataValues
+//        twoData[1] = i
+//        twoData[2] = j
+//        evaluate(program: &twoData)
+//        if twoData[0] == 19690720 {
+//            print("2b [\(i),\(j)]; ans: \(100 * i + j)")
+//            break outer
+//        }
+//
+//    }
+//}
