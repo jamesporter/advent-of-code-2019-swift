@@ -1,17 +1,17 @@
 import Cocoa
 
-// MARK: Helpers: going to do these kinds of things a lot judging from previous years!
+func readFile(name: String) -> String {
+    let fileURL = Bundle.main.url(forResource: name, withExtension: "txt")
+    return try! String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+}
+
 func readNumbersFromLines(filename: String) -> [Int] {
-    let fileURL = Bundle.main.url(forResource: filename, withExtension: "txt")
-    let content = try! String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-    
+    let content = readFile(name: filename)
     return content.split(separator: "\n").compactMap { Int(String($0)) }
 }
 
 func readNumberList(filename: String) -> [Int] {
-    let fileURL = Bundle.main.url(forResource: filename, withExtension: "txt")
-    let content = try! String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-    
+    let content = readFile(name: filename)
     return content.split(separator: ",").compactMap { Int(String($0)) }
 }
 
@@ -151,41 +151,73 @@ extension Int {
 
 // 4b
 
-let lower = 246540
-let higher = 787419
+//let lower = 246540
+//let higher = 787419
+//
+//func isValid(_ n: Int) -> Bool {
+//    func isWeaklyIncreasing(_ items: [Int]) -> Bool {
+//        for i in 0..<(items.count - 1) {
+//            if items[i] > items[i+1] {
+//                return false
+//            }
+//        }
+//        return true
+//    }
+//
+//    func existsDouble(_ items: [Int]) -> Bool {
+//        for i in 0..<(items.count - 1) {
+//            if items[i] == items[i+1] {
+//                // Now must check *not* extra stuff
+//                let lowNbr = i > 0 ? items[i - 1] : nil
+//                let highNbr = i < items.count - 2 ? items[i + 2]: nil
+//                if !(items[i] == lowNbr || items[i] == highNbr) {
+//                    return true
+//                }
+//            }
+//        }
+//        return false
+//    }
+//
+//    let seq: [Int] = Array(String(n)).map { Int(String($0))! }
+//    return seq.count == 6 && isWeaklyIncreasing(seq) && existsDouble(seq)
+//}
+//
+//var count = 0
+//for i in (lower + 1)..<higher {
+//    if isValid(i) {
+//        count += 1
+//    }
+//}
+//print("4b \(count)")
 
-func isValid(_ n: Int) -> Bool {
-    func isWeaklyIncreasing(_ items: [Int]) -> Bool {
-        for i in 0..<(items.count - 1) {
-            if items[i] > items[i+1] {
-                return false
-            }
-        }
-        return true
-    }
+let rawSix = readFile(name: "6")
+// from orbiter to parent
+var lookup: [String: String] = [:]
+var keys = Set<String>()
 
-    func existsDouble(_ items: [Int]) -> Bool {
-        for i in 0..<(items.count - 1) {
-            if items[i] == items[i+1] {
-                // Now must check *not* extra stuff
-                let lowNbr = i > 0 ? items[i - 1] : nil
-                let highNbr = i < items.count - 2 ? items[i + 2]: nil
-                if !(items[i] == lowNbr || items[i] == highNbr) {
-                    return true
-                }
-            }
-        }
-        return false
-    }
-
-    let seq: [Int] = Array(String(n)).map { Int(String($0))! }
-    return seq.count == 6 && isWeaklyIncreasing(seq) && existsDouble(seq)
+rawSix.split(separator: "\n").forEach {
+    let items = $0.split(separator: ")")
+    let a = String(items[0])
+    let b = String(items[1])
+    lookup[b] = a
+    keys.insert(a)
+    keys.insert(b)
 }
 
-var count = 0
-for i in (lower + 1)..<higher {
-    if isValid(i) {
-        count += 1
+var orbits = 0
+keys.forEach {
+    var current: String? = $0
+    while current != nil {
+        let nextOne = lookup[current!]
+        if nextOne != nil {
+            orbits += 1
+            current = nextOne
+        } else {
+            current = nil
+        }
     }
 }
-print("4b \(count)")
+
+print("6a \(orbits)")
+
+
